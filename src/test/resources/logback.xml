@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--<pattern>%d{HH:mm:ss.SSS} %p [%thread] %c{0}.%M:%L - %msg%n</pattern>-->
+			<pattern>%d{HH:mm:ss.SSS} %level [%thread] %c{0}.%M:%L - %msg%n</pattern>
+			<!--<pattern>%d{HH:mm:ss.SSS} %level [%thread] %replace(%caller{1}){'\r|\n|\r\n|Caller\+0\t\sat\s',''} - %msg%n</pattern>-->
+			<!--<pattern>%d{HH:mm:ss.SSS} %level [%thread] %replace(%caller{1}){'.*[(]{1}|[)]{1}[\s\S]*',''} - %msg%n</pattern>-->
+		</encoder>
+	</appender>
+
+	<!-- 按照每天生成日志文件 http://blog.csdn.net/wangjunjun2008/article/details/18732019 -->
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名-->
+			<FileNamePattern>logback.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<!--日志文件保留天数-->
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出,%d:日期;%thread:线程名;%-5level：级别,从左显示5个字符宽度;%msg:日志消息;%n:换行符-->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50}.%method:%line - %msg%n</pattern>
+		</encoder>
+		<!--日志文件最大的大小-->
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<!-- jersey -->
+	<logger name="org.glassfish.jersey" level="ERROR"/>
+	<logger name="org.glassfish.jersey.test" level="ERROR"/>
+	<logger name="org.glassfish.jersey.filter.LoggingFilter" level="ERROR"/>
+	<logger name="org.glassfish.jersey.logging.LoggingFeature" level="ERROR"/>
+
+	<!-- cn.bc -->
+	<logger name="cn.bc" level="WARN"/>
+	<logger name="cn.bc.rest.test.JerseySpringTest" level="WARN"/>
+	<logger name="cn.bc.rest.test.WebTargetFactoryBean" level="WARN"/>
+
+	<!-- 设置默认的日志级别: TRACE < DEBUG < INFO < WARN < ERROR -->
+	<root level="ERROR">
+		<appender-ref ref="console"/>
+		<appender-ref ref="rollingFile"/>
+	</root>
+</configuration>

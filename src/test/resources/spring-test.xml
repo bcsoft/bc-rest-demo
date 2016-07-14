@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:annotation-config/>
+	<context:component-scan base-package="cn.bc"
+	                        scope-resolver="org.springframework.context.annotation.Jsr330ScopeMetadataResolver"/>
+
+	<!-- 单元测试需要注入的 rest 客户端 -->
+	<bean name="webTarget" class="cn.bc.rest.test.WebTargetFactoryBean">
+		<property name="componentPackages">
+			<list>
+				<!-- 自动注册包中所有 rest 注解的资源 (如 cn.bc.rest.exceptionmapper.XXXMapper) -->
+				<value>cn.bc.rest</value>
+			</list>
+		</property>
+		<property name="componentClasses">
+			<list>
+				<!-- 手动配置的过滤器 -->
+				<!-- >> 认证访问过滤器
+				<value>cn.bc.rest.AuthRequestFilter</value> -->
+				<!-- >> 默认 utf-8 的过滤器
+				<value>cn.bc.rest.CharsetResponseFilter</value> -->
+
+				<!-- 配置测试的资源类，如果没有注册，测试时就会收到 404 -->
+				<value>cn.bc.demo.web.rest.DemoResource</value>
+				<value>cn.bc.demo.web.rest.InfoResource</value>
+				<value>cn.bc.demo.web.rest.JsonResource</value>
+				<value>cn.bc.demo.web.rest.FormResource</value>
+			</list>
+		</property>
+		<property name="serverPort" value="8888"/>
+	</bean>
+</beans>
