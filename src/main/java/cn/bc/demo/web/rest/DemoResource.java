@@ -1,5 +1,6 @@
 package cn.bc.demo.web.rest;
 
+import cn.bc.core.exception.NotExistsException;
 import cn.bc.demo.Demo;
 import cn.bc.demo.DemoService;
 import com.owlike.genson.GensonBuilder;
@@ -9,10 +10,14 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.io.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -128,10 +133,112 @@ public class DemoResource {
 	}
 
 	@GET
+	//@Consumes(MediaType.APPLICATION_JSON)   // Accept=application/json 或 Content-Type=application/json(优先判断Content-Type)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id: \\d+}")
-	public Demo get(@PathParam("id") Long id) {
+	public Demo getJson(@PathParam("id") Long id) {
 		if (id == 100) throw new WebApplicationException();
 		return service.get(id);
+	}
+
+	@GET
+	//@Consumes(MediaType.TEXT_PLAIN)         // Accept=text/plain 或 Content-Type=text/plain(优先判断Content-Type)
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("{id: \\d+}")
+	public String getText(@PathParam("id") Long id) {
+		return service.get(id).getStr();
+	}
+
+	// 新建
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String create(@FormParam("code") String code, @FormParam("name") String name) {
+		return "{\"method\": \"POST\"}";
+	}
+
+	// 更新
+	@PUT
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("{id: \\d+}")
+	public String update(@PathParam("id") Long id, @FormParam("code") String code, @FormParam("name") String name) {
+		if (id == 0) {
+			throw new NotExistsException("测试 NotExistsMapper");
+		}
+		return "{\"method\": \"PUT\"}";
+	}
+
+	// 删除
+	@DELETE
+	@Path("{ids: .+}")
+	//@Path("{ids: \\d+|[0-9,]+}")    // id1[,id2]
+	public Response delete(@PathParam("ids") String ids) {
+		return Response.noContent().build();
+	}
+
+	@POST
+	@Path("file")
+	public File postFile(File file) throws IOException {
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+			String s;
+			do {
+				s = br.readLine();
+				logger.debug(s);
+			} while (s != null);
+			return file;
+		}
+	}
+
+	// 字节流
+	@POST
+	@Path("stream")
+	public String postInputStream(InputStream is) throws IOException {
+		// jdk 7 的 try-with-resource 语法（最后自动释放资源）
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+			StringBuilder r = new StringBuilder();
+			String s = br.readLine();
+			while (s != null) {
+				r.append(s).append("\n");
+				logger.debug(s);
+				s = br.readLine();
+			}
+			return r.toString();
+		}
+	}
+
+	@POST
+	@Path("reader")
+	public String postReader(Reader reader) throws IOException {
+		try (BufferedReader br = new BufferedReader(reader)) {
+			StringBuilder r = new StringBuilder();
+			String s = br.readLine();
+			while (s != null) {
+				r.append(s).append("\n");
+				logger.debug(s);
+				s = br.readLine();
+			}
+			return r.toString();
+		}
+	}
+
+	@GET
+	@Path("json")
+	public JsonObject jsr353_1() {
+		return Json.createObjectBuilder().add("id", 1).add("name", "test").build();
+	}
+
+	@GET
+	@Path("jsons")
+	public JsonArray jsr353_2() {
+		return Json.createArrayBuilder()
+				.add(Json.createObjectBuilder()
+						.add("id", 1)
+						.add("str", "a"))
+				.add(Json.createObjectBuilder()
+						.add("id", 2)
+						.add("str", "b"))
+				.addNull()
+				.build();
 	}
 }
