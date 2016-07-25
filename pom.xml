@@ -2,16 +2,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>cn.bc</groupId>
-		<artifactId>bc-parent</artifactId>
-		<version>3.0-SNAPSHOT</version>
-		<relativePath>../bc-framework/bc-parent/pom.xml</relativePath>
+		<groupId>cn.bc.rest</groupId>
+		<artifactId>bc-rest-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../bc-rest-parent/pom.xml</relativePath>
 	</parent>
 	<groupId>cn.bc.rest</groupId>
 	<artifactId>bc-rest-demo</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<description>rest 模块范例</description>
+	<description>bc-rest-demo</description>
 
 	<dependencies>
 		<dependency>
@@ -20,9 +20,17 @@
 		</dependency>
 
 		<dependency>
-			<groupId>cn.bc</groupId>
-			<artifactId>bc-core</artifactId>
-			<version>3.0-SNAPSHOT</version>
+			<groupId>cn.bc.rest</groupId>
+			<artifactId>bc-rest-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- test -->
+		<dependency>
+			<groupId>cn.bc.rest</groupId>
+			<artifactId>bc-rest-test</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
