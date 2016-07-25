@@ -5,7 +5,7 @@
 		<groupId>cn.bc.rest</groupId>
 		<artifactId>bc-rest-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
-		<relativePath>../bc-rest-parent/pom.xml</relativePath>
+		<relativePath></relativePath>
 	</parent>
 	<groupId>cn.bc.rest</groupId>
 	<artifactId>bc-rest-demo</artifactId>
