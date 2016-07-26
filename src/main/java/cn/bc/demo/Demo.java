@@ -7,8 +7,8 @@ package cn.bc.demo;
  */
 public class Demo {
 	private Long id;
-	private String str;
-	private boolean bln;
+	private String name;
+	private boolean ok;
 
 	public Long getId() {
 		return id;
@@ -18,19 +18,19 @@ public class Demo {
 		this.id = id;
 	}
 
-	public String getStr() {
-		return str;
+	public String getName() {
+		return name;
 	}
 
-	public void setStr(String str) {
-		this.str = str;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public boolean getBln() {
-		return bln;
+	public boolean isOk() {
+		return ok;
 	}
 
-	public void setBln(boolean bln) {
-		this.bln = bln;
+	public void setOk(boolean ok) {
+		this.ok = ok;
 	}
 }

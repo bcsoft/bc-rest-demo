@@ -1,14 +1,24 @@
 package cn.bc.demo;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
+ * Demo CRUD
+ *
  * @author dragon 2016-07-14
  */
 public interface DemoService {
-	Demo get(Long id);
+	Demo load(Long id);
 
-	List<Demo> findAll();
+	Collection<Demo> find();
 
-	Demo getByDao(Long id);
+	Demo create(Demo demo);
+
+	int update(Demo demo);
+
+	int delete(Long id);
+
+	int delete(Long[] ids);
+
+	int deleteAll();
 }

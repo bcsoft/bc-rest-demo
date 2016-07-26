@@ -1,11 +1,14 @@
 package cn.bc.demo.web.rest;
 
+import cn.bc.demo.DemoService;
 import cn.bc.demo.DemoServiceImpl;
 import com.owlike.genson.GensonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Singleton;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -29,21 +32,35 @@ import java.util.Map;
  *
  * @author dragon 2016-07-25
  */
-@Singleton
+@Named
 @Path("info")
 public class InfoResource {
 	private final static Logger logger = LoggerFactory.getLogger(DemoServiceImpl.class);
+	@Inject
+	public DemoService service;
+
+	@PostConstruct
+	private void init() {
+		// 在这里添加 spring 注入后的初始化代码;
+	}
 
 	@GET
+	@Path("service-hash-code")
 	@Produces(MediaType.TEXT_PLAIN)
+	public String getServiceHashCode() {
+		return service == null ? "null" : String.valueOf(service.hashCode());
+	}
+
+	@GET
 	@Path("hash-code")
+	@Produces(MediaType.TEXT_PLAIN)
 	public String getHashCode() {
 		return String.valueOf(this.hashCode());
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("request")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String requestInfo(@Context HttpHeaders headers,
 	                          @Context UriInfo uriInfo,
 	                          @Context HttpServletRequest request,
