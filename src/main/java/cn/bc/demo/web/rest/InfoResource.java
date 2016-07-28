@@ -1,7 +1,6 @@
 package cn.bc.demo.web.rest;
 
 import cn.bc.demo.DemoService;
-import cn.bc.demo.DemoServiceImpl;
 import com.owlike.genson.GensonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ import java.util.Map;
 @Named
 @Path("info")
 public class InfoResource {
-	private final static Logger logger = LoggerFactory.getLogger(DemoServiceImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(InfoResource.class);
 	@Inject
 	public DemoService service;
 
