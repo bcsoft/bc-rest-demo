@@ -27,7 +27,13 @@
 		</triggeringPolicy>
 	</appender>
 
-	<!-- cn.bc.restful -->
+	<!-- jersey -->
+	<logger name="org.glassfish.jersey" level="ERROR"/>
+	<logger name="org.glassfish.jersey.test" level="ERROR"/>
+	<logger name="org.glassfish.jersey.filter.LoggingFilter" level="ERROR"/>
+	<logger name="org.glassfish.jersey.logging.LoggingFeature" level="ERROR"/>
+
+	<!-- cn.bc -->
 	<logger name="cn.bc" level="DEBUG"/>
 
 	<!-- 设置默认的日志级别: TRACE < DEBUG < INFO < WARN < ERROR -->
