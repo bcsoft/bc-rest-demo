@@ -4,12 +4,13 @@
 	<parent>
 		<groupId>cn.bc.rest</groupId>
 		<artifactId>bc-rest-parent</artifactId>
-		<version>1.1-SNAPSHOT</version>
-		<relativePath></relativePath>
+		<version>${revision}</version>
+		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>bc-rest-demo</artifactId>
 	<name>bc-rest-demo</name>
 	<packaging>jar</packaging>
+	<description>BC Rest Demo</description>
 	<dependencies>
 		<dependency>
 			<groupId>com.owlike</groupId>
