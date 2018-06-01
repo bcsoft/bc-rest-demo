@@ -22,53 +22,53 @@ import static org.junit.Assert.assertEquals;
 @Transactional
 @ContextConfiguration("classpath:spring-test.xml")
 public class JsonResourceTest {
-	@Autowired
-	public WebTarget target;
+  @Autowired
+  public WebTarget target;
 
-	@Test
-	public void getJsonObject() {
-		Response res = target.path("json/1").request().get();
-		assertEquals(OK.getStatusCode(), res.getStatus());
-		assertEquals(MediaType.APPLICATION_JSON_TYPE, res.getMediaType());
-		// or assertEquals({"id":1}, res.readEntity(String.class));
-		assertEquals("{\"id\":1}", res.readEntity(JsonObject.class).toString());
-	}
+  @Test
+  public void getJsonObject() {
+    Response res = target.path("json/1").request().get();
+    assertEquals(OK.getStatusCode(), res.getStatus());
+    assertEquals(MediaType.APPLICATION_JSON_TYPE, res.getMediaType());
+    // or assertEquals({"id":1}, res.readEntity(String.class));
+    assertEquals("{\"id\":1}", res.readEntity(JsonObject.class).toString());
+  }
 
-	@Test
-	public void getJsonArray() {
-		Response res = target.path("json").request().get();
-		assertEquals(OK.getStatusCode(), res.getStatus());
-		assertEquals(MediaType.APPLICATION_JSON_TYPE, res.getMediaType());
-		// or assertEquals([{"id":1}], res.readEntity(String.class));
-		assertEquals("[{\"id\":1}]", res.readEntity(JsonArray.class).toString());
-	}
+  @Test
+  public void getJsonArray() {
+    Response res = target.path("json").request().get();
+    assertEquals(OK.getStatusCode(), res.getStatus());
+    assertEquals(MediaType.APPLICATION_JSON_TYPE, res.getMediaType());
+    // or assertEquals([{"id":1}], res.readEntity(String.class));
+    assertEquals("[{\"id\":1}]", res.readEntity(JsonArray.class).toString());
+  }
 
-	@Test
-	public void postJsonObject() {
-		JsonObject json = Json.createObjectBuilder()
-				.add("str", "test")
-				.add("bln", true)
-				.add("num", 1.1)
-				.build();
-		Response res = target.path("json/post-object").request().post(Entity.json(json));
-		assertEquals(OK.getStatusCode(), res.getStatus());
-		assertEquals(MediaType.APPLICATION_JSON_TYPE, res.getMediaType());
-		// or assertEquals(json.toString(), res.readEntity(String.class));
-		assertEquals(json.toString(), res.readEntity(JsonObject.class).toString());
-	}
+  @Test
+  public void postJsonObject() {
+    JsonObject json = Json.createObjectBuilder()
+      .add("str", "test")
+      .add("bln", true)
+      .add("num", 1.1)
+      .build();
+    Response res = target.path("json/post-object").request().post(Entity.json(json));
+    assertEquals(OK.getStatusCode(), res.getStatus());
+    assertEquals(MediaType.APPLICATION_JSON_TYPE, res.getMediaType());
+    // or assertEquals(json.toString(), res.readEntity(String.class));
+    assertEquals(json.toString(), res.readEntity(JsonObject.class).toString());
+  }
 
-	@Test
-	public void postJsonArray() {
-		JsonArray jsons = Json.createArrayBuilder()
-				.add(Json.createObjectBuilder()
-						.add("str", "test")
-						.add("bln", true)
-						.add("num", 1.1))
-				.build();
-		Response res = target.path("json/post-array").request().post(Entity.json(jsons));
-		assertEquals(Response.Status.CREATED.getStatusCode(), res.getStatus());
-		assertEquals(MediaType.APPLICATION_JSON_TYPE, res.getMediaType());
-		// or assertEquals(jsons.toString(), res.readEntity(String.class));
-		assertEquals(jsons.toString(), res.readEntity(JsonArray.class).toString());
-	}
+  @Test
+  public void postJsonArray() {
+    JsonArray jsons = Json.createArrayBuilder()
+      .add(Json.createObjectBuilder()
+        .add("str", "test")
+        .add("bln", true)
+        .add("num", 1.1))
+      .build();
+    Response res = target.path("json/post-array").request().post(Entity.json(jsons));
+    assertEquals(Response.Status.CREATED.getStatusCode(), res.getStatus());
+    assertEquals(MediaType.APPLICATION_JSON_TYPE, res.getMediaType());
+    // or assertEquals(jsons.toString(), res.readEntity(String.class));
+    assertEquals(jsons.toString(), res.readEntity(JsonArray.class).toString());
+  }
 }

@@ -19,43 +19,43 @@ import javax.ws.rs.core.Response;
 @Named
 @Path("json")
 public class JsonResource {
-	private static Logger logger = LoggerFactory.getLogger(JsonResource.class);
+  private static Logger logger = LoggerFactory.getLogger(JsonResource.class);
 
-	@GET
-	@Path("{id: \\d+}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public JsonObject getJsonObject(@PathParam("id") final int id) {
-		return Json.createObjectBuilder()
-				.add("id", id)
-				.build();
-	}
+  @GET
+  @Path("{id: \\d+}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public JsonObject getJsonObject(@PathParam("id") final int id) {
+    return Json.createObjectBuilder()
+      .add("id", id)
+      .build();
+  }
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public JsonArray getJsonArray() {
-		return Json.createArrayBuilder()
-				.add(Json.createObjectBuilder().add("id", 1))
-				.build();
-	}
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public JsonArray getJsonArray() {
+    return Json.createArrayBuilder()
+      .add(Json.createObjectBuilder().add("id", 1))
+      .build();
+  }
 
-	// 使用 jersey-media-json-processing
-	// https://jersey.java.net/documentation/latest/media.html#json.json-p
-	// class com.owlike.genson.ext.jsr353.GensonJsonObject
-	@POST
-	@Path("post-object")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response postJsonObject(JsonObject data) {
-		logger.debug("class={}", data.getClass());
-		return Response.ok().entity(data).build();
-	}
+  // 使用 jersey-media-json-processing
+  // https://jersey.java.net/documentation/latest/media.html#json.json-p
+  // class com.owlike.genson.ext.jsr353.GensonJsonObject
+  @POST
+  @Path("post-object")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response postJsonObject(JsonObject data) {
+    logger.debug("class={}", data.getClass());
+    return Response.ok().entity(data).build();
+  }
 
-	@POST
-	@Path("post-array")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response postJsonArray(JsonArray data) {
-		logger.debug("class={}", data.getClass());
-		return Response.created(null).entity(data).build();
-	}
+  @POST
+  @Path("post-array")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response postJsonArray(JsonArray data) {
+    logger.debug("class={}", data.getClass());
+    return Response.created(null).entity(data).build();
+  }
 }

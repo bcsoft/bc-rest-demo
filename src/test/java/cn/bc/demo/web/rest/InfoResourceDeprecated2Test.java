@@ -11,9 +11,9 @@ import static org.junit.Assert.assertNotEquals;
  */
 @Deprecated
 public class InfoResourceDeprecated2Test extends ClassicalJerseySpringTest {
-	@Test
-	public void resourceIsPrototype() {
-		assertNotEquals(target("info/hash-code").request().get(String.class),
-				target("info/hash-code").request().get(String.class));
-	}
+  @Test
+  public void resourceIsPrototype() {
+    assertNotEquals(target("info/hash-code").request().get(String.class),
+      target("info/hash-code").request().get(String.class));
+  }
 }
